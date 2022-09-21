@@ -1,57 +1,46 @@
 import { Button } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../styles/Modal.module.css'
-import { useRouter } from 'next/router';
+import { v4 as uuidv4 } from 'uuid';
 
 
 type createReq = {
   name: string,
   email: string,
-  phone: string
+  phone: string,
+  id: string,
+  createdAt: string,
 }
 const reg = /^(\d{2})\D*(\d{5}|\d{4})\D*(\d{4})$/
 
-export const FormModal = ({ setShowFormModal }: any) => {
+export const FormModal = ({ setShowFormModal, setRows }: any) => {
   const [newCustomer, setNewCustomer] = useState<createReq>({
+    id: '',
     name: '',
     email: '',
-    phone: ''
+    phone: '',
+    createdAt: '',
   })
-  const router = useRouter();
-  const refreshData = () => {
-    router.replace(router.asPath);
-  }
-  async function create(data: createReq) {
-    try {
-      fetch('http://localhost:3000/api/create', {
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'POST'
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (reg.test(newCustomer.phone)) {
-      create(newCustomer)
-      resetCustomer()
-      refreshData();
-      return
-    }
-    alert('Número de telefone invalido')
+    setNewCustomer(oldVal => ({ ...oldVal, id: uuidv4() }))
+    setNewCustomer(oldVal => ({ ...oldVal, createdAt: new Date().toLocaleDateString() }))
   }
   const resetCustomer = () => {
     setNewCustomer({
+      id: '',
       name: '',
       email: '',
-      phone: ''
+      phone: '',
+      createdAt: '',
     })
   }
-
+  useEffect(() => {
+    if (!newCustomer.id || !newCustomer.createdAt) return
+    setRows((previusCustomer: any) => [...previusCustomer, newCustomer])
+    resetCustomer()
+  }, [newCustomer.id, newCustomer.createdAt])
   return (
     <div id='modal'>
       <div className={styles.modalBody}>

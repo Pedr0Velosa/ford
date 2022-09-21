@@ -4,8 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { columns } from '../src/utils/CustomersTable';
 import { Button } from '@mui/material';
 import Modal from '../src/components/Modal'
-import { CustomerFindMany } from './api/Customer';
-import { Customer } from '../src/utils/TypeCustomer';
+import { CUSTOMERS } from '../src/utils/customers';
 import { FormModal } from '../src/components/FormModal';
 import { FormModalCar } from '../src/components/FormCar';
 import { FindCar } from '../src/components/FindCar';
@@ -20,7 +19,7 @@ type customerProp = {
 }
 
 const Customer = ({ data }: any) => {
-  const rows: Customer[] = data.dataCustomers.map((customer: customerProp) => (
+  const initialRows: any = data.map((customer: customerProp) => (
     {
       id: customer.id,
       name: customer.name,
@@ -32,12 +31,15 @@ const Customer = ({ data }: any) => {
         .map((customerCar: { id: any; }) => customerCar.id) || 'Sem carro registrado'
     }
   ))
-  const [selectedRow, setSelectedRow] = useState<Customer[]>([])
+  const [selectedRow, setSelectedRow] = useState<any>([])
   const [showModal, setShowModal] = useState<boolean>(false)
   const [showFormModal, setShowFormModal] = useState<boolean>(false)
   const [showFormModalCar, setShowFormModalCar] = useState<boolean>(false)
   const [showFindaCar, setShowFindCar] = useState<boolean>(false)
-
+  const [rows, setRows] = useState<customerProp[]>([])
+  useEffect(() => {
+    setRows(initialRows)
+  }, [])
   return (
     <>
       <Head>
@@ -50,7 +52,7 @@ const Customer = ({ data }: any) => {
         setShowModal={setShowModal}
       />
       {showFormModal &&
-        <FormModal setShowFormModal={setShowFormModal} />}
+        <FormModal setShowFormModal={setShowFormModal} setRows={setRows} />}
       {showFormModalCar &&
         <FormModalCar setShowFormModalCar={setShowFormModalCar} />}
       {showFindaCar &&
@@ -93,7 +95,7 @@ const Customer = ({ data }: any) => {
             onSelectionModelChange={(ids) => {
               const selectedIDs = new Set(ids);
               const selectedRowData = rows.filter((row) =>
-                selectedIDs.has(row.id.toString())
+                selectedIDs.has(row?.id?.toString())
               );
               setSelectedRow(selectedRowData);
             }}
@@ -114,9 +116,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   )
   return {
     props: {
-      data: await new Promise((resolve, reject) => {
-        resolve(CustomerFindMany());
-      })
+      data: CUSTOMERS
     },
   }
 

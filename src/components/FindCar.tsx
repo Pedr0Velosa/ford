@@ -1,16 +1,14 @@
 import { Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import styles from '../styles/Modal.module.css'
-//import { CarFindUnique } from '../../pages/api/findUnique'
 
 export const FindCar = ({ setShowFindCar }: any) => {
   const [plate, setPlate] = useState('')
   const [carid, setCarId] = useState('')
   const [findCars, setFindCars] = useState([])
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    //CarFindUnique(carid)
   }
   console.log(findCars);
 

@@ -1,0 +1,12 @@
+.container{
+  margin: 2rem auto 0;
+  width: fit-content;
+  color: red;
+}
+
+.list{
+  margin-top: 1rem;
+  color: red;
+  font-weight: 600;
+  font-size: 1.2rem;
+}

@@ -31,6 +31,22 @@ form>*{
   display: block;
 }
 
+html,body,#__next,main{
+  height: 100%;
+}
+
+#__next{
+  display: flex;
+  flex-direction: column;
+}
+main{
+  flex-grow: 2;
+  margin-bottom: 6rem;
+}
+footer{
+  flex-shrink: 0;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

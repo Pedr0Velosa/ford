@@ -1,14 +1,17 @@
 import Head from 'next/head'
+import Integrantes from '../src/components/Integrantes';
+import Footer from '../src/components/Footer'
 
 function Home() {
 
   return (
-    <div>
+    <>
       <Head>
         <title>Home</title>
       </Head>
-
-    </div>
+      <Integrantes />
+      <Footer />
+    </>
   );
 }
 

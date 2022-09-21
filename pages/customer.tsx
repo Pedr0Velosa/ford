@@ -9,19 +9,27 @@ import { Customer } from '../src/utils/TypeCustomer';
 import { FormModal } from '../src/components/FormModal';
 import { FormModalCar } from '../src/components/FormCar';
 import { FindCar } from '../src/components/FindCar';
+import Head from 'next/head';
 
+type customerProp = {
+  id: any;
+  name: any;
+  phone: any;
+  email: any;
+  createdAt: any;
+}
 
-const Customer = ({ data }: { dataCustomers: object[], dataCars: object[] }) => {
-  const rows: Customer[] = data.dataCustomers.map(customer => (
+const Customer = ({ data }: any) => {
+  const rows: Customer[] = data.dataCustomers.map((customer: customerProp) => (
     {
       id: customer.id,
       name: customer.name,
       phone: customer.phone,
       email: customer.email,
       createdAt: customer.createdAt,
-      cars: data.dataCars?.filter(car =>
+      cars: data.dataCars?.filter((car: { customerId: any; }) =>
         car.customerId === customer.id)
-        .map(customerCar => customerCar.id) || 'Sem carro registrado'
+        .map((customerCar: { id: any; }) => customerCar.id) || 'Sem carro registrado'
     }
   ))
   const [selectedRow, setSelectedRow] = useState<Customer[]>([])
@@ -32,6 +40,9 @@ const Customer = ({ data }: { dataCustomers: object[], dataCars: object[] }) => 
 
   return (
     <>
+      <Head>
+        <title>Customer</title>
+      </Head>
       <Modal
         length={selectedRow.length}
         selectedRow={selectedRow}
@@ -66,13 +77,6 @@ const Customer = ({ data }: { dataCustomers: object[], dataCars: object[] }) => 
           >
             Create Customers
           </Button>
-          {/* <Button
-            sx={{ my: '1rem', mx: '0.5rem' }}
-            variant='contained'
-            onClick={() => setShowFindCar(true)}
-          >
-            Find Car
-          </Button> */}
           <Button
             sx={{ my: '1rem', mx: '0.5rem' }}
             variant='contained'

@@ -63,7 +63,7 @@ export const FormModalCar = ({ setShowFormModalCar }: any) => {
           <label htmlFor="bundle">bundle</label>
           <input type={'text'} id='bundle'
             value={newCar.bundle}
-            onChange={e => setNewCar({ ...newCar, bundle: (e.target.value).toInt() })} />
+            onChange={e => setNewCar({ ...newCar, bundle: parseInt((e.target.value)) })} />
           <div className={styles.button}>
             <Button
               variant='contained'

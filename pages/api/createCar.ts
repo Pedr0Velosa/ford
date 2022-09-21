@@ -12,7 +12,7 @@ export default async function handler(
       data: {
         plate,
         customerId,
-        bundle
+        bundle: 0
       }
     })
   } catch (error) {

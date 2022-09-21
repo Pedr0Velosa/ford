@@ -4,6 +4,12 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import prisma from '../../prisma/lib/prisma'
 
+type carProps = {
+  id: any;
+  createdAt: { toLocaleDateString: () => any };
+  plate: any
+}
+
 export async function CarFindMany() {
 
   const cars = await prisma.car.findMany({
@@ -15,7 +21,7 @@ export async function CarFindMany() {
       //bundle: true
     }
   })
-  const dataCars = cars.map(car => {
+  const dataCars = cars.map((car: carProps) => {
     return {
       id: car.id,
       createdAt: car.createdAt.toLocaleDateString(),

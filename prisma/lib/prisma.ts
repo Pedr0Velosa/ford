@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
-let prisma: PrismaClient;
+let prisma: any;
+let global: any
 
 if (typeof window === "undefined") {
   if (process.env.NODE_ENV === "production") {

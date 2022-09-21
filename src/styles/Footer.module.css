@@ -1,0 +1,12 @@
+.footer{
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem;
+  background-color: #006b8b;
+  gap: 1rem;
+}
+
+.footer > p{
+  font-weight: 700;
+  font-size: 1.15rem;
+}

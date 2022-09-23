@@ -55,4 +55,7 @@ footer{
     color: white;
     background: black;
   }
+  .MuiDataGrid-main{
+    color:white
+  }
 }
